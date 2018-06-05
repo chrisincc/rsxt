@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>人事招聘系统</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="__ROOT__/static/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+	<link rel="stylesheet" href="__ROOT__/static/layui/css/main.css" media="all" />
+</head>
+
+
+
+<blockquote class="layui-elem-quote explain">
+	<p>修改招聘信息的ID为：{$recruit_id}。</p>
+</blockquote>
+
+
+<div style="width:1000px;margin:0 auto;">
+
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+		<legend>修改招聘信息</legend>
+	</fieldset>
+
+	<form class="layui-form layui-form-pane">
+
+		<input type="hidden" name="recruit_id" value='{$recruit_id}'>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">标题</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="必填" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">开始日期</label>
+				<div class="layui-input-block">
+					<input type="text" name="begin_time" id="begin_time" lay-verify="required" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">截止日期</label>
+				<div class="layui-input-block">
+					<input type="text" name="end_time" id="end_time" lay-verify="required" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<select name="recruit_status" id="recruit_status">
+
+
+					<option value="待发布">待发布</option>
+					<option value="已发布"  selected="">已发布</option>
+					<option value="已截止">已截止</option>
+
+				</select>
+			</div>
+		</div>
+
+
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="updata">提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+
+	</form>
+</div>
+		
+
+
+<script src="__ROOT__/static/layui/layui.js"  charset="utf-8"></script>
+
+<script>
+    layui.use(['form','layer','jquery','laydate',], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,$=layui.jquery
+            ,laydate=layui.laydate
+        	,jq=layui.jquery;
+
+        form.verify({
+
+        });
+        laydate.render({
+            elem: '#begin_time'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#end_time'
+            ,type: 'datetime'
+        });
+
+        //监听提交
+        form.on('submit(updata)', function(data){
+
+            /*layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });*/
+
+            var param = data.field;
+            jq.post('modifyRecruit', param, function(res) {
+                if (res.code == 200) {
+
+                    layer.msg(res.msg, {
+                        icon: 1,
+                        time: 1000
+                    }, function() {
+                        window.parent.location.reload();//location.href = '{:url("showUserHome")}';
+                    });
+                } else {
+
+                    layer.msg(res.msg, {
+                        icon: 2,
+                        anim: 6,
+                        time: 1000
+                    });
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+
+        });
+
+        $(document).ready(function(){
+
+            var param={'recruit_id':{$recruit_id}};
+            jq.post('getRecruit',param, function(res) {
+                if (res.code == 200) {
+
+                    //layer.alert(res.data[0]);
+                    /*var str='';
+                    $.each(res.data[0],function (i,item) {
+                        //$("#recruit").append("<option value='0'>0</option>")
+                        //$("#recruit").append("<option value=\""+item.recruit_id+"\">"+item.title+"</option>");
+                        //$("#selectID").append("<option value='0'>0</option>")
+                        //$("#selectID").append("<option value='7'>7</option>");
+                        str=str+i+'='+res.data[0][i]+'****';
+                    });
+                    layer.alert(str);*/
+                    //str='';
+                    $("input:text").each(function(index,item){
+                        if ($(this).attr("name")) {
+                            $(this).val(res.data[0][$(this).attr("name")]);
+                            //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                        }
+                    });
+
+                    $("select").each(function(index,item){
+                        if ($(this).attr("name")) {
+                            $(this).val(res.data[0][$(this).attr("name")]);
+                            //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                        }
+                    });
+
+                    form.render();
+
+                }
+            });
+            // layer.msg("jquery测试step1");
+            //$("#username").attr("value", '张三');
+            //$("#birthdate").attr("value", '2017-10-29');
+            //$("#degree").attr("value", '博士学位');
+            //$("option:[value='女']").prop('selected', 'true');
+            //$("#degree").get(0).selectedIndex = 3;
+            //var selectval = $("#degree").val();
+            //var selectval = $("input:radio[name=sex]").val();
+            //$("#occupation").attr("value",'主任');
+            //$("#sex1").attr("checked",false);
+            //$("#sex0").attr("checked","checked");
+            //$("input:radio[name=sex]")[1].checked = true;
+            //$("#tradeType1").attr("checked",false);
+            //document.getElementById("sex1").checked=true;
+            //layer.msg(selectval);
+            //var selectval=$("input:radio[value='男']").val();
+            //$("input[name='sex']").eq(0).removeAttr("checked");textarea
+            //$("input:radio[value='未婚']").prop('checked', 'true');
+            //$("input:radio[value='女']").prop('checked', 'true');
+
+            //form.render();//花了一天的时间测试出来，不加载这个改变不了radio值
+            //$("input:radio[value='女']").prop('checked', 'true');
+            //$("input[name='sex']").eq(1).prop("checked","checked");
+            //layer.msg("jquery测试step2"+selectval);
+            //layer.alert($("#notice").text());
+
+        });
+
+
+
+
+
+
+    });
+
+
+
+
+
+</script>
+
+</body>
+</html>

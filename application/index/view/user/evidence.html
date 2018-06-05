@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>人事招聘系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/main.css" media="all" />
+</head>
+<body>
+  <blockquote class="layui-elem-quote explain">
+    <p id="notice">请您务必先填写完成个人报名表，然后再申请岗位！</p>
+  </blockquote>
+
+
+  <div style="width:1000px;margin:0 auto;">
+  
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>证明材料上传</legend>
+</fieldset>
+
+    <div class="layui-btn-group demoTable">
+      <button class="layui-btn" data-type="getCheckData">删除选中材料</button>
+      <button class="layui-btn" data-type="getCheckLength">添加新材料</button>
+      <button class="layui-btn" data-type="isAll">刷新</button>
+    </div>
+
+    <table class="layui-table" id="evidence_table" lay-filter="evidence_table">
+
+    </table>
+
+  </div>
+
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a> -->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+<script src="__ROOT__/static/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['form', 'upload','jquery','table'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,table = layui.table
+  ,upload = layui.upload
+  ,jq = layui.jquery
+  ,$=layui.jquery;
+
+   /*$(document).ready(function(){
+
+       jq.post('getEvidence','', function(res) {
+           if (res.code == 200) {
+
+
+               /*var str='';
+               $.each(res.data[0],function (i,item) {
+                   //$("#recruit").append("<option value='0'>0</option>")
+                   //$("#recruit").append("<option value=\""+item.recruit_id+"\">"+item.title+"</option>");
+                   //$("#selectID").append("<option value='0'>0</option>")
+                   //$("#selectID").append("<option value='7'>7</option>");
+                   str=str+i+'='+res.data[0][i]+'****';
+               });
+               layer.alert(str);
+               //str='';
+               $("input:text").each(function(index,item){
+                   if ($(this).attr("name")) {
+                      $(this).val(res.data[0][$(this).attr("name")]);
+                      //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("textarea").each(function(index,item){
+                   if ($(this).attr("name")) {
+                       $(this).val(res.data[0][$(this).attr("name")]);
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("select").each(function(index,item){
+                   if ($(this).attr("name")) {
+                       $(this).val(res.data[0][$(this).attr("name")]);
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("input:radio").each(function(index,item){
+                   if ($(this).attr("name") && $(this).val()==res.data[0][$(this).attr("name")]) {
+                       $(this).prop('checked', 'true');
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("textarea").attr("disabled", true);
+               $("select").attr("disabled", true);
+               $("input:radio").attr("disabled",true);
+               $("input:text").attr("disabled",true);
+               $("button").attr("disabled",true);
+               form.render();
+               $("#notice").text(res.msg);
+
+               layer.alert(res.msg);
+
+
+
+           }
+       });
+
+
+   });*/
+
+    table.render({
+        elem: '#evidence_table'
+        ,url: 'getEvidenceList'
+        ,method:'POST'
+        ,cols: [[
+            {type:'checkbox', fixed: 'left'}
+            ,{field:'evidence_id', title: '序号', width:'9%', align:'center'}
+            ,{field:'evidence_name', title: '文件名'}
+            ,{field:'updata_at', title: '上传时间', width:'15%',align:'center'}
+            ,{title: '操作', toolbar: '#barDemo', width:'20%',align:'center'}
+
+        ]]
+        ,id: 'evidence_table_Reload'
+        ,even: true
+        ,loading:true
+        ,page: false
+        //,limit:30
+        //,height: 550
+    });
+
+    /*var $ = layui.$, active = {
+        reload: function(){
+            var demoReload = $('#demoReload');
+
+            //执行重载
+            table.reload('testReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                    key: {
+                        id: demoReload.val()
+                    }
+                }
+            });
+        }
+    };*/
+
+
+
+         //监听表格复选框选择
+        table.on('checkbox(evidence_table)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(evidence_table)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+
+                //layer.msg('ID：'+ data.id + ' 的查看操作');
+                var param ={'evidence':JSON.stringify(data)};
+                jq.post('getEvidence_pic',param, function (res) {
+                    if (res.code == 0) {
+                        //var path='<div><img src="__ROOT__'.res.msg.'"'.'</div>'//layer.alert(res.msg);
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 0,
+                            skin: 'layui-layer-nobg', //没有背景色
+                            shadeClose: true,
+                            content: '<div><img src="__ROOT__'+res.msg+'"</div>'
+                        });
+                    }
+                    else {
+                        layer.alert(res.msg);
+                    }
+                });
+
+
+            } else if(obj.event === 'del'){
+
+                layer.confirm('确定删除行么', function(index){
+                    //console.log(typeof(data));
+                    //data.push('active','del');
+
+                    var param ={'active':'del','evidence':JSON.stringify(data)};
+                    jq.post('editEvidence',param, function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    });
+
+                    obj.del();
+                    layer.close(index);//关闭confirm
+
+                });
+            } else if(obj.event === 'edit'){
+
+                //layer.alert('json：'+ JSON.stringify(data));
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: '516px',
+                    skin: 'layui-layer-nobg', //没有背景色
+                    shadeClose: true,
+                    content: '<div><img src="__ROOT__/static/layui/images/002.jpg" width=100% height=100%></div>'
+                });
+
+            }
+        });
+
+        var $ = layui.$, active = {
+            getCheckData: function(){ //获取选中数据
+                var checkStatus = table.checkStatus('evidence_table_Reload')
+                    ,data = checkStatus.data;
+                //table.del()
+                //console.log(data);
+                var param ={'active':'del_list','evidence':JSON.stringify(data)};
+
+                layer.confirm('确定删除选中的行么？', function(index){
+
+
+                    jq.post('editEvidence',param, function (res) {
+                            if (res.code == 0) {
+
+                                //table.checkStatus('evidence_table_Reload').del();
+                                layer.alert(res.msg);
+                                table.reload('evidence_table_Reload');
+
+                            }
+                            else {
+                                layer.alert(res.msg);
+                            }
+                        });
+
+                    layer.close(index);
+
+                });
+
+                //layer.alert('测试1');
+
+            }
+            ,getCheckLength: function(){ //添加新证明材料
+                var index = layer.open({
+                    type: 2,
+                    title:'添加新证明材料',
+                    //area: ['700px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: 'showEvidenceUp'
+                });
+                layer.full(index);
+            }
+            ,isAll: function(){ //验证是否全选
+                table.reload('evidence_table_Reload');
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

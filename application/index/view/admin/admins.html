@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>人事招聘系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/main.css" media="all" />
+</head>
+<body>
+  <blockquote class="layui-elem-quote explain">
+    <p id="notice">请您务必先填写完成个人报名表，然后再申请岗位！</p>
+  </blockquote>
+
+
+  <div style="width:1000px;margin:0 auto;">
+  
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>管理员用户管理</legend>
+</fieldset>
+
+    <div class="demoTable">
+      搜索邮箱或者用户名：
+      <div class="layui-inline">
+        <input class="layui-input" name="email" id="demoReload" autocomplete="off">
+      </div>
+      <button class="layui-btn" data-type="reload">搜索</button>
+      <button class="layui-btn" data-type="newAdmin">添加新管理员</button>
+    </div>
+
+    <table class="layui-table" id="admins_table" lay-filter="admins_table">
+
+    </table>
+
+  </div>
+
+
+  <script type="text/html" id="barDemo">
+
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="reset_password">重置密码</a>
+
+    <a class="layui-btn layui-btn-xs" lay-event="enable">启用</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">禁用</a>
+  </script>
+<script src="__ROOT__/static/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['form','jquery','table'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,table = layui.table
+  ,jq = layui.jquery
+  ,$=layui.jquery;
+
+
+
+    table.render({
+        elem: '#admins_table'
+        ,url: 'getAdminList'
+        ,method:'POST'
+        ,cols: [[
+
+            {field:'admin_id', title: '序号', width:'9%', align:'center'}
+            ,{field:'admin_name', title: '昵称',width:'15%', align:'center'}
+            ,{field:'email', title: '邮箱/用户名',align:'center'}
+            ,{field:'status', title: '状态',width:'15%',align:'center'}
+            ,{field:'authority', title: '权限',width:'15%',align:'center'}
+            ,{title: '操作', toolbar: '#barDemo', width:'20%',align:'center'}
+
+        ]]
+        ,id: 'admins_table_Reload'
+        ,even: true
+        ,loading:true
+        ,page: true
+        ,limit:30
+        //,height: 550
+    });
+
+    var $ = layui.$, active = {
+        reload: function(){
+            var demoReload = $('#demoReload');
+
+            //执行重载
+            table.reload('admins_table_Reload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                ,where: {
+                    key: {
+                        email: demoReload.val()
+                    }
+                }
+            });
+        }
+        ,newAdmin: function(){
+            var index = layer.open({
+                type: 2,
+                title:'添加新管理员',
+                //area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: 'showAddAdmin'
+            });
+            layer.full(index);
+        }
+
+
+    };
+
+
+
+
+        //监听工具条
+        table.on('tool(admins_table)', function(obj){
+            var data = obj.data;
+
+            if(obj.event === 'reset_password'){
+                layer.confirm('确定重置该用户的初试密码吗？', function (index) {
+                    //console.log(typeof(data));
+                    //data.push('active','del');
+
+                    var param = {'active':'reset_password', 'data': JSON.stringify(data)};
+                    jq.post('edit_admin', param, function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    });
+
+                    //obj.del();
+                    layer.close(index);//关闭confirm
+
+                });
+
+            }else if(obj.event === 'enable') {
+
+                layer.confirm('确定启用该用户吗？', function (index) {
+                    //console.log(typeof(data));
+                    //data.push('active','del');
+
+                    var param = {'active': 'enable', 'data': JSON.stringify(data)};
+                    jq.post('edit_admin', param, function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+                            table.reload('admins_table_Reload');
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    });
+
+                    //obj.del();
+                    layer.close(index);//关闭confirm
+
+                });
+            } else if(obj.event === 'disable') {
+
+                layer.confirm('确定禁用该用户吗？', function (index) {
+                    //console.log(typeof(data));
+                    //data.push('active','del');
+
+                    var param = {'active': 'disable', 'data': JSON.stringify(data)};
+                    jq.post('edit_admin', param, function (res) {
+                        if (res.code == 0) {
+                            layer.alert(res.msg);
+                            table.reload('admins_table_Reload');
+                        }
+                        else {
+                            layer.alert(res.msg);
+                        }
+                    });
+
+                    //obj.del();
+                    layer.close(index);//关闭confirm
+
+                });
+            }
+        });
+
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

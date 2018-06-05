@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>人事招聘系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/layui.css" media="all" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+  <link rel="stylesheet" href="__ROOT__/static/layui/css/main.css" media="all" />
+</head>
+<body>
+  <blockquote class="layui-elem-quote explain">
+    <p id="notice">请您务必先填写完成个人报名表，然后再申请岗位！</p>
+  </blockquote>
+
+
+  <div style="width:1000px;margin:0 auto;">
+  
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>陕西艺术职业学院招聘报名表</legend>
+</fieldset>
+<form class="layui-form layui-form-pane">
+  <div class="layui-form-item">
+    <label class="layui-form-label">姓名</label>
+    <div class="layui-input-block">
+      <input type="text" name="username" id="username" lay-verify="required" autocomplete="off" placeholder="必填" class="layui-input">
+    </div>
+  </div>
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">性别</label>
+    <div class="layui-input-block">
+      <input type="radio" name="sex" id="sex0" value="男" title="男" checked>
+      <input type="radio" name="sex" id="sex1" value="女" title="女" >
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">出生日期</label>
+      <div class="layui-input-block">
+        <input type="text" name="birthdate" id="birthdate" lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">身份证号码</label>
+    <div class="layui-input-block">
+      <input type="text" name="identity_card" lay-verify="required|identity" placeholder="必填" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+   <div class="layui-form-item">
+      <label class="layui-form-label">政治面貌</label>
+      <div class="layui-input-block">
+        <input type="text" name="political_status" lay-verify="required" placeholder="必填" autocomplete="off" class="layui-input">
+      </div>
+   </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">籍贯</label>
+    <div class="layui-input-block">
+      <input type="text" name="birthplace" lay-verify="required" placeholder="必填" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">婚否</label>
+    <div class="layui-input-block">
+      <input type="radio" name="marry" value="已婚" title="已婚" checked="">
+      <input type="radio" name="marry" value="未婚" title="未婚">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">最高学历</label>
+    <div class="layui-input-block">
+      <select name="education" lay-filter="education">
+
+        <option value="专科及以下">专科及以下</option>
+        <option value="本科">本科</option>
+        <option value="研究生"  selected="">研究生</option>
+
+      </select>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">最高学位</label>
+    <div class="layui-input-block">
+      <select name="degree" id="degree">
+
+        <option value="无">无</option>
+        <option value="学士学位">学士学位</option>
+        <option value="硕士学位"  selected="">硕士学位</option>
+        <option value="博士学位">博士学位</option>
+
+      </select>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">职务</label>
+    <div class="layui-input-block">
+      <input type="text" name="occupation" id="occupation" placeholder="没有可以不填" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">职称</label>
+    <div class="layui-input-block">
+      <input type="text" name="positional_title" placeholder="没有可以不填" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">毕业学校</label>
+    <div class="layui-input-inline">
+      <input type="text" name="university" lay-verify="required" placeholder="最高学位获得的学校" autocomplete="off" class="layui-input">
+    </div>
+    <label class="layui-form-label">专业</label>
+    <div class="layui-input-inline">
+      <input type="text" name="major" lay-verify="required" placeholder="必填" autocomplete="off" class="layui-input">
+    </div>
+
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">住址</label>
+    <div class="layui-input-block">
+      <input type="text" name="address" lay-verify="required" placeholder="必填" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">手机</label>
+    <div class="layui-input-block">
+      <input type="text" name="phone_number" lay-verify="required|phone" placeholder="必填，很重要" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">办公软件</label>
+    <div class="layui-input-block">
+      <input type="radio" name="office" value="是" title="是" checked="">
+      <input type="radio" name="office" value="否" title="否">
+    </div>
+  </div>
+
+ 
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">学习及工作简历</label>
+    <div class="layui-input-block">
+      <textarea placeholder="必填" lay-verify="required" class="layui-textarea" name="working_experiences"></textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">有何特长</label>
+    <div class="layui-input-block">
+      <textarea placeholder="可以不填" class="layui-textarea" name="special_skill"></textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">受过何种奖励</label>
+    <div class="layui-input-block">
+      <textarea placeholder="可以不填" class="layui-textarea" name="awards_honors"></textarea>
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="updata">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+
+</form>
+
+  </div>
+<script src="__ROOT__/static/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate
+  ,jq = layui.jquery
+  ,$=layui.jquery;
+    //日期
+    laydate.render({
+        elem: '#birthdate'
+    });
+
+ 
+  
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+ 
+  //自定义验证规则
+  form.verify({
+    /*title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }*/
+  });
+  
+
+  
+  //监听提交
+  form.on('submit(updata)', function(data){
+
+          /*layer.alert(JSON.stringify(data.field), {
+              title: '最终的提交信息'
+          });*/
+
+          var param = data.field;
+          jq.post('createProfiles', param, function(data) {
+              if (data.code == 200) {
+
+                  layer.msg(data.msg, {
+                      icon: 1,
+                      time: 1000
+                  }, function() {
+                      //location.href = '{:url("showUserHome")}';
+                  });
+              } else {
+
+                  layer.msg(data.msg, {
+                      icon: 2,
+                      anim: 6,
+                      time: 1000
+                  });
+              }
+          });
+          return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+
+      });
+
+   $(document).ready(function(){
+
+       jq.post('getProfile','', function(res) {
+           if (res.code == 200) {
+
+
+               /*var str='';
+               $.each(res.data[0],function (i,item) {
+                   //$("#recruit").append("<option value='0'>0</option>")
+                   //$("#recruit").append("<option value=\""+item.recruit_id+"\">"+item.title+"</option>");
+                   //$("#selectID").append("<option value='0'>0</option>")
+                   //$("#selectID").append("<option value='7'>7</option>");
+                   str=str+i+'='+res.data[0][i]+'****';
+               });
+               layer.alert(str);*/
+               //str='';
+               $("input:text").each(function(index,item){
+                   if ($(this).attr("name")) {
+                      $(this).val(res.data[0][$(this).attr("name")]);
+                      //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("textarea").each(function(index,item){
+                   if ($(this).attr("name")) {
+                       $(this).val(res.data[0][$(this).attr("name")]);
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("select").each(function(index,item){
+                   if ($(this).attr("name")) {
+                       $(this).val(res.data[0][$(this).attr("name")]);
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("input:radio").each(function(index,item){
+                   if ($(this).attr("name") && $(this).val()==res.data[0][$(this).attr("name")]) {
+                       $(this).prop('checked', 'true');
+                       //str+=$(this).attr("name")+'='+res.data[0][$(this).attr("name")]+'****';
+                   }
+               });
+               $("textarea").attr("disabled", true);
+               $("select").attr("disabled", true);
+               $("input:radio").attr("disabled",true);
+               $("input:text").attr("disabled",true);
+               $("button").attr("disabled",true);
+               form.render();
+               $("#notice").text(res.msg);
+
+               layer.alert(res.msg);
+
+
+
+           }
+       });
+       // layer.msg("jquery测试step1");
+       //$("#username").attr("value", '张三');
+       //$("#birthdate").attr("value", '2017-10-29');
+       //$("#degree").attr("value", '博士学位');
+       //$("option:[value='女']").prop('selected', 'true');
+       //$("#degree").get(0).selectedIndex = 3;
+       //var selectval = $("#degree").val();
+       //var selectval = $("input:radio[name=sex]").val();
+       //$("#occupation").attr("value",'主任');
+       //$("#sex1").attr("checked",false);
+       //$("#sex0").attr("checked","checked");
+       //$("input:radio[name=sex]")[1].checked = true;
+       //$("#tradeType1").attr("checked",false);
+       //document.getElementById("sex1").checked=true;
+       //layer.msg(selectval);
+       //var selectval=$("input:radio[value='男']").val();
+       //$("input[name='sex']").eq(0).removeAttr("checked");textarea
+       //$("input:radio[value='未婚']").prop('checked', 'true');
+       //$("input:radio[value='女']").prop('checked', 'true');
+
+       //form.render();//花了一天的时间测试出来，不加载这个改变不了radio值
+       //$("input:radio[value='女']").prop('checked', 'true');
+       //$("input[name='sex']").eq(1).prop("checked","checked");
+       //layer.msg("jquery测试step2"+selectval);
+       //layer.alert($("#notice").text());
+
+   });
+
+  });
+</script>
+
+</body>
+</html>

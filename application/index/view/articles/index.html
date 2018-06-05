@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>陕西艺术职业学院人事招聘系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  {load href="../layui/css/layui.css" /}
+ 
+  <!--><import type='css' file='layui.css.layui.default'/>
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+  
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+
+
+<body>
+ <div style="background-color:#009688;height:100px;"><font face="隶书" size="30">陕西艺术职业学院人事招聘系统</font></div>
+
+
+<ul class="layui-nav" style="background-color:#1E9FFF;text-align=center;">
+		  <li class="layui-nav-item layui-this"><a href="">首页</a></li>
+		  <li class="layui-nav-item"><a href="">学校概况</a></li>
+		  <li class="layui-nav-item"><a href="">我要报名</a></li>
+		  <li class="layui-nav-item"><a href="">联系我们</a></li>
+</ul>  
+
+<div style="width:1200px;margin:0 auto;">        
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-xs9">
+		<div class="layui-carousel" id="carousel01">
+		  <div carousel-item="">
+			
+			<div><img src="../layui/images/002.jpg" width=100% height=100%></div>
+			<div><img src="../layui/images/003.png" width=100% height=100%></div>
+			<div><img src="../layui/images/004.png" width=100% height=100%></div>
+			<div><img src="../layui/images/005.jpg" width=100% height=100%></div>
+			<div><img src="../layui/images/006.jpg" width=100% height=100%></div>
+			<div><img src="../layui/images/008.jpg" width=100% height=100%></div>
+			
+		  </div>
+		</div>
+		<!-- 条目中可以是任意内容，如：<img src=""> -->
+    </div>
+    <div class="layui-col-xs3">
+      <div class="grid-demo" style="background-color:#c2c2c2;height:280px;">最新新闻</div>
+    </div>
+</div>              
+
+<div class="layui-row  layui-col-space10">
+    <div class="layui-col-xs6">
+      <div class="grid-demo" style="background-color:#c2c2c2;height:580px;">
+	  <a>招聘信息</a><br>
+	  <hr class="layui-bg-blue">
+	  <a>陕西艺术职业学院2017年公开招聘工作人员考试成绩公示</a><br>
+	  <hr class="layui-bg-blue">
+	  <a>关于2017年招聘选拔工作人员更改考试时间的紧急通知</a><br>
+	  <hr class="layui-bg-blue">
+	  <a>陕西艺术职业学院关于2017年招聘选拔工作人员考试的通知</a><br>
+	  <hr class="layui-bg-blue">
+	  <a>陕西艺术职业学院2017年公开招聘选拔工作人员公告</a><br>
+	  <hr class="layui-bg-blue">
+	  <a>陕西艺术职业学院2017年继续公开招聘人事代理工作人员考...</a><br>
+	  <hr class="layui-bg-blue">
+	  </div>
+    </div>
+    <div class="layui-col-xs6">
+      <div class="grid-demo" style="background-color:#c2c2c2;height:580px;">公告公示</div>
+    </div>
+</div>
+</div>
+
+
+<div class="layui-row">
+    <div style="position:fixed;bottom:0px;background-color:#e2e2e2;width:100%;height:80px;">底部固定区域</div>
+</div> 
+          
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+//导航栏的效果
+
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+  
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+//轮播效果
+layui.use('carousel', function(){
+  var carousel = layui.carousel;
+  //建造实例
+  carousel.render({
+    elem: '#carousel01'
+    ,width: '100%' //设置容器宽度
+    ,arrow: 'hover' //始终显示箭头
+    //,anim: 'updown' //切换动画方式
+  });
+});
+</script>
+
+</body>
+</html>
